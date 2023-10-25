@@ -1,7 +1,8 @@
 import React from 'react'
 import Header from '@/components/header/Header'
 
-const Signup = () => {
+
+const Login = () => {
   return (
     <div>
       <Header/>
@@ -9,4 +10,4 @@ const Signup = () => {
   )
 }
 
-export default Signup
+export default Login
