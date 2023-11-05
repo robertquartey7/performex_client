@@ -1,6 +1,16 @@
+import { login } from "@/api/auth";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
+import { signIn, useSession } from "next-auth/react";
+import { toast } from "react-toastify";
+import { getUser } from "@/api/user";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+
 function Signin() {
+  const router = useRouter();
+  const { data } = useSession();
+
   const {
     handleSubmit,
     register,
@@ -8,8 +18,32 @@ function Signin() {
   } = useForm();
 
   // handling submit
-  function onSubmit({ email, password }) {
-    console.log(email, password);
+  async function onSubmit({ email, password }) {
+    const login = await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    });
+
+    if (login.ok) {
+      toast.success("login successfull");
+    } else {
+      toast.error("something went wrong");
+    }
+  }
+  if (data) {
+    getUser(data.user.id)
+      .then(({ data }) => {
+        if (!data.is_profile_completed) {
+          return router.push("/profile");
+        } else {
+          return router.push("/");
+        }
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
   }
   return (
     <div
@@ -62,7 +96,7 @@ function Signin() {
         </div>
         <div>
           <span className="underline ">
-            <Link href={"/forget"}>Forgot Password</Link>
+            <Link href={"/forgot"}>Forgot Password</Link>
           </span>
         </div>
         <button
