@@ -11,7 +11,7 @@ const Header = () => {
         <Image
           src="/img/logo.jpg"
           width={30}
-          height={500}
+          height={5}
           alt="Picture of the author"
         />
       </Link>
