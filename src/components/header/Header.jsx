@@ -17,9 +17,9 @@ const Header = () => {
       </Link>
       <div >
         <Link className="ml-2"  href="/">HOME</Link>
-        <Link className="ml-2" href="/Ourstory">OUR STORY</Link>
-        <Link className="ml-2" href="/Signin">SIGN IN</Link>
-        <Link className="ml-2" href="/Signup"><Button variant="contained">SIGN UP FOR FREE </Button>
+        <Link className="ml-2" href="/ourstory">OUR STORY</Link>
+        <Link className="ml-2" href="/login">SIGN IN</Link>
+        <Link className="ml-2" href="/register"><Button variant="contained">SIGN UP FOR FREE </Button>
 </Link>
       </div>
     </nav>
