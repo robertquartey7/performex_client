@@ -6,7 +6,14 @@ function Recruiter() {
     register,
     formState: { errors },
   } = useForm();
-  function onSubmit() {}
+  function onSubmit(data) {
+    console.log(data);
+    // firstName,
+    // lastName,
+    // userType,
+    // sport,
+    // roleAtInstitution,
+  }
   return (
     <div>
       <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>

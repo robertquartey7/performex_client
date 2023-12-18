@@ -1,27 +1,59 @@
+import { createAthlete } from "@/api/profile";
+import { useRouter } from "next/router";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
-function Athlete() {
+function Athlete({ userId }) {
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = useForm();
+  const router = useRouter();
   // handling submit
-  function onSubmit() {}
+
+  function onSubmit({
+    firstName,
+    lastName,
+    parentEmail,
+    primarySport,
+    country,
+    dateOfBirth,
+  }) {
+    createAthlete({
+      firstName,
+      lastName,
+      parentEmail,
+      primarySport,
+      userType: "ATHLETE",
+      country,
+      dateOfBirth,
+      userId,
+    })
+      .then((res) => {
+        toast.success("profile completed");
+        router.push("/");
+      })
+      .catch((err) => {
+        toast.error("Something went wrong");
+        console.log(err.message);
+      });
+  }
+
   return (
     <div>
-      <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)} >
+      <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
         <div className="">
           <input
             type="text"
-            id="firstname"
+            id="firstName"
             placeholder="First Name"
             className="border p-2 w-full rounded-lg py-4"
-            {...register("firstname", { required: true })}
-            aria-invalid={errors.firstname ? "true" : "false"}
+            {...register("firstName", { required: true })}
+            aria-invalid={errors.firstName ? "true" : "false"}
           />
-          {errors.firstname?.type === "required" && (
+          {errors.firstName?.type === "required" && (
             <p role="alert" className="text-red-600">
               First Name is required
             </p>
@@ -31,13 +63,13 @@ function Athlete() {
         <div className="">
           <input
             type="text"
-            id="lastname"
+            id="lastName"
             placeholder="Last Name"
             className="border p-2 w-full rounded-lg py-4"
-            {...register("lastname", { required: true })}
-            aria-invalid={errors.lastname ? "true" : "false"}
+            {...register("lastName", { required: true })}
+            aria-invalid={errors.lastName ? "true" : "false"}
           />
-          {errors.lastname?.type === "required" && (
+          {errors.lastName?.type === "required" && (
             <p role="alert" className="text-red-600">
               Last Name is required
             </p>
@@ -49,7 +81,7 @@ function Athlete() {
             id="sport"
             placeholder="Primary Sport"
             className="border p-2 w-full rounded-lg py-4"
-            {...register("sport", { required: true })}
+            {...register("primarySport", { required: true })}
             aria-invalid={errors.sport ? "true" : "false"}
           />
           {errors.sport?.type === "required" && (
@@ -70,6 +102,22 @@ function Athlete() {
           {errors.country?.type === "required" && (
             <p role="alert" className="text-red-600">
               Your Country is required
+            </p>
+          )}
+        </div>
+
+        <div className="">
+          <input
+            type="date"
+            id="dateOfBirth"
+            placeholder="Your Date Of Birth"
+            className="border p-2 w-full rounded-lg py-4"
+            {...register("dateOfBirth", { required: true })}
+            aria-invalid={errors.dateOfBirth ? "true" : "false"}
+          />
+          {errors.dateOfBirth?.type === "required" && (
+            <p role="alert" className="text-red-600">
+              Your Date Of Birth is required
             </p>
           )}
         </div>
@@ -96,8 +144,6 @@ function Athlete() {
           Go To Profile
         </button>
       </form>
-
-  
     </div>
   );
 }

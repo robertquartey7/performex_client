@@ -5,7 +5,6 @@ import { signIn, useSession } from "next-auth/react";
 import { toast } from "react-toastify";
 import { getUser } from "@/api/user";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 
 function Signin() {
   const router = useRouter();
@@ -26,16 +25,20 @@ function Signin() {
     });
 
     if (login.ok) {
+      //
       toast.success("login successfull");
     } else {
       toast.error("something went wrong");
     }
   }
+
   if (data) {
     getUser(data.user.id)
       .then(({ data }) => {
+        if (!data.is_verified)
+          return router.push(`/verified?status=${data.is_verified}`);
         if (!data.is_profile_completed) {
-          return router.push("/profile");
+          return router.push(`/profile?_id=${data._id}`);
         } else {
           return router.push("/");
         }
@@ -113,6 +116,7 @@ function Signin() {
             sign up
           </span>
         </Link>
+        <button></button>
       </div>
 
       <div className="text-gray-500 m-5 px-10 flex flex-col  items-center">
@@ -126,3 +130,4 @@ function Signin() {
 }
 
 export default Signin;
+
