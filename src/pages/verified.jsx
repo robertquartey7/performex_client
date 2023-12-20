@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { toast } from "react-toastify";
 import { ArrowLeftCircleIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
+import { requestEmailVerification } from "@/api/verify";
 function verified() {
   // check if user email is verified
   const router = useRouter();
@@ -34,7 +35,14 @@ function EmailNotVerified() {
     const email = emailRef.current.value;
     if (!emailRef.current?.value) return toast.warning("Email is required!!!");
 
-    toast.success("Please check your email for instructions");
+    requestEmailVerification(email)
+      .then((res) => {
+        console.log(res.data);
+        toast.success("Please check your email for instructions");
+      })
+      .catch((err) => {
+        toast.error("Something went wrong");
+      });
   }
 
   return (
