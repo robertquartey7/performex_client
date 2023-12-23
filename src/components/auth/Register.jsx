@@ -2,7 +2,11 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { register as SignUp } from "../../api/auth";
 import { toast } from "react-toastify";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/router";
+
 function Register() {
+  const router = useRouter();
   const {
     handleSubmit,
     register,
@@ -14,16 +18,31 @@ function Register() {
       .then((res) => {
         if (res.status === 201) {
           toast.success("Sign up Successfull");
+
+          // verified email
+          // add the userId to the backend
+          router.push(`/profile?_id=${res.data.userId}`);
         } else {
           console.log(res);
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.message);
         toast.error("Something went wrong");
       });
   }
 
+  // handling google auth
+  // async function handleGoogleAuth() {
+  //   console.log("google auth");
+  //   signIn("google")
+  //     .then((res) => {
+  //       console.log("robert", res);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }
   return (
     <div
       className="
@@ -73,17 +92,27 @@ function Register() {
             </p>
           )}
         </div>
-        {/* <div>
-          <span className="underline ">
-            <Link href={"/forget"}>Forgot Password</Link>
-          </span>
-        </div> */}
+
         <button
           className="block text-center p-2 border w-full mt-2 bg-green-900 text-white rounded hover:opacity-90 duration-100 delay-100"
           type="submit"
         >
           Sign up
         </button>
+        <div className=" flex justify-between items-center gap-10">
+          <span className="h-[1px] w-full border-black bg-black"></span>
+          <span>or</span>
+          <span className="h-[1px] w-full  border-black bg-black"></span>
+        </div>
+        {/* <div
+          className="flex justify-center items-center  gap-2 cursor-pointer hover:underline hover:text-gray-500 delay-150 transition-all"
+          onClick={handleGoogleAuth}
+        >
+          <span>
+            <img src="/img/google-logo.svg" alt="" className="h-8" />
+          </span>
+          <span>Sign In With Google</span>
+        </div> */}
       </form>
       <div className="m-5 p-10 py-5 flex flex-col gap-5 border items-center">
         <span className="mr-1 text-gray-500"> Don't have an account</span>

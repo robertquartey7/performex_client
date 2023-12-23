@@ -1,7 +1,17 @@
 import Profile from "@/components/profile/Profile";
-import React from "react";
+import { useSession } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
 
 function profile() {
+  const router = useRouter();
+  const { data: session } = useSession();
+
+  if (!session) {
+    return router.push("/login");
+  }
+  
   return (
     <>
       <div className="md:w-[70%] lg:w-[50%] border p-10 mx-auto">
