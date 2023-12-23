@@ -1,8 +1,10 @@
 import { requestReset } from "@/api/password";
 import { getUser } from "@/api/user";
+import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
 import { toast } from "react-toastify";
+
 
 function ForgetPassword() {
   const emailRef = useRef();
@@ -26,7 +28,7 @@ function ForgetPassword() {
   return (
     <div className="flex justify-center items-center flex-col">
       <div className="h-56 ">
-        <img src="/img/logo.svg" alt="" className="h-full w-full" />
+        <Image src="/img/logo.svg" alt="" className="h-full w-full" />
       </div>
       <div className="shadow border p-10 rounded mb-2 md:w-[60%]">
         <h1 className="font-bold text-2xl text-center mb-2">Forgot Password</h1>
