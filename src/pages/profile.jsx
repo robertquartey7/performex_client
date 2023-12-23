@@ -6,17 +6,12 @@ import React, { useEffect } from "react";
 
 function profile() {
   const router = useRouter();
-  const { data } = useSession();
-  const userId = useSearchParams().get("_id");
+  const { data: session } = useSession();
 
-  useEffect(() => {
-    if (userId) {
-      console.log(userId);
-    } else {
-      // router.push("/login");
-    }
-  }, [userId]);
-
+  if (!session) {
+    return router.push("/login");
+  }
+  
   return (
     <>
       <div className="md:w-[70%] lg:w-[50%] border p-10 mx-auto">

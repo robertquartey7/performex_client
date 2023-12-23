@@ -14,9 +14,9 @@ export default function App({
         <title>PerformEx</title>
       </Head>
       <SessionProvider session={session}>
-        <button className="border py-2 px-4 " onClick={() => signOut()}>
+        {/* <button className="border py-2 px-4 " onClick={() => signOut()}>
           click
-        </button>
+        </button> */}
         <Component {...pageProps} />
 
         <ToastContainer

@@ -42,7 +42,7 @@ function Signin() {
         } else {
           return router.push("/");
         }
-        console.log(data);
+        // console.log(data);
       })
       .catch((err) => {
         console.log("err", err);
