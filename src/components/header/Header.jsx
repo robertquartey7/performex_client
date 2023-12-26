@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import logo from "../../../public/img/logo.jpg";
 import Image from "next/image";
+import { signOut } from "next-auth/react";
 
 const Header = ({ user }) => {
   return (
@@ -36,7 +37,12 @@ const Header = ({ user }) => {
         )}
         {user && (
           <Link href="/">
-            <span className="p-2 w-full text-white bg-green-900">PROFILE</span>
+            <span
+              className="p-2 w-full text-white bg-green-900"
+              onClick={() => signOut()}
+            >
+              Logout
+            </span>
           </Link>
         )}
       </div>

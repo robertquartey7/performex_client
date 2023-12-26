@@ -1,14 +1,8 @@
-import React from 'react'
-import Header from '@/components/header/Header'
+import React from "react";
+import Header from "@/components/header/Header";
 
 const Ourstory = () => {
-  return (
-    <div>
-      <Header/>
-      hello
-      
-    </div>
-  )
-}
+  return <div></div>;
+};
 
-export default Ourstory
+export default Ourstory;

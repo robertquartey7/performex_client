@@ -26,12 +26,10 @@ export async function register(email, password) {
         password,
       }
     );
-    console.log(user);
+
     return user;
   } catch (error) {
-    console.log(error);
+  
     return error;
   }
 }
-
-

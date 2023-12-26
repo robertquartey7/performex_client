@@ -14,22 +14,33 @@ function verified() {
   const [emailVerified, setEmailVerified] = useState(false);
   const [error, setError] = useState(false);
 
-
   useEffect(() => {
     if (searchParam.get("code")) {
       // if there is a token then set loading to
       verifyEmail(searchParam.get("code"))
         .then((res) => {
-          setEmailVerified(true);
+          console.log(res);
+          if (res.response?.status === 404) {
+            toast.error("user Not Found ");
+            return;
+          }
+          if (!res.status === 200) {
+            toast.error("something went wrong ");
+            return;
+          }
           setLoading(false);
+          setEmailVerified(true);
+          toast.success("Email Verified");
+          router.push("/");
         })
         .catch((err) => {
           console.log(err.message);
           setLoading(false);
+          setEmailVerified(false);
           setError(true);
         });
-      setLoading(false);
     } else {
+      setEmailVerified(false);
       setLoading(false);
     }
   }, [searchParam]);
@@ -49,8 +60,8 @@ function verified() {
     );
   }
 
-
   if (!loading) {
+    console.log(emailVerified);
     return (
       <div className="h-screen w-screen flex justify-center items-center relative">
         <button
