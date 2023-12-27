@@ -2,8 +2,9 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { register as SignUp } from "../../api/auth";
 import { toast } from "react-toastify";
-import { signIn } from "next-auth/react";
+
 import { useRouter } from "next/router";
+import { signIn } from "next-auth/react";
 
 function Register() {
   const router = useRouter();
@@ -15,19 +16,33 @@ function Register() {
   // handling submit
   function onSubmit({ email, password }) {
     SignUp(email, password)
-      .then((res) => {
+      .then(async (res) => {
+        if (res.response?.status === 409) {
+          toast.error("Already have an account");
+        }
         if (res.status === 201) {
           toast.success("Sign up Successfull");
 
+          /* signing user after sign up */
+          const login = await signIn("credentials", {
+            email,
+            password,
+            redirect: false,
+          });
+
+          if (login) {
+            return router.push(`/profile?_id=${res.data.userId}`);
+          }
+
+          toast.error("something went wrong");
+          return;
+
           // verified email
           // add the userId to the backend
-          router.push(`/profile?_id=${res.data.userId}`);
-        } else {
-          console.log(res);
         }
       })
       .catch((err) => {
-        console.log(err.message);
+        console.log(err);
         toast.error("Something went wrong");
       });
   }

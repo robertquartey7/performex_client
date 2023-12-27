@@ -5,6 +5,8 @@ import { useRouter } from "next/router";
 import { requestEmailVerification, verifyEmail } from "@/api/verify";
 import { useSearchParams } from "next/navigation";
 import Loading from "@/components/Loading";
+import { VerifiedEmail } from "@/components/verify/VerifiedEmail";
+import { EmailNotVerified } from "@/components/verify/EmailNotVerified";
 
 function verified() {
   // check if user email is verified
@@ -14,22 +16,37 @@ function verified() {
   const [emailVerified, setEmailVerified] = useState(false);
   const [error, setError] = useState(false);
 
-
   useEffect(() => {
     if (searchParam.get("code")) {
       // if there is a token then set loading to
       verifyEmail(searchParam.get("code"))
         .then((res) => {
-          setEmailVerified(true);
+    
+          if (res.response?.status === 404) {
+            toast.error("user Not Found ");
+            return;
+          }
+          if (res.response?.status === 500) {
+            toast.error("something went wrong ");
+            return;
+          }
+          if (!res.status === 200) {
+            toast.error("something went wrong ");
+            return;
+          }
           setLoading(false);
+          setEmailVerified(true);
+          toast.success("Email Verified");
+         
         })
         .catch((err) => {
           console.log(err.message);
           setLoading(false);
+          setEmailVerified(false);
           setError(true);
         });
-      setLoading(false);
     } else {
+      setEmailVerified(false);
       setLoading(false);
     }
   }, [searchParam]);
@@ -49,8 +66,8 @@ function verified() {
     );
   }
 
-
   if (!loading) {
+    console.log(emailVerified);
     return (
       <div className="h-screen w-screen flex justify-center items-center relative">
         <button
@@ -67,46 +84,3 @@ function verified() {
 }
 
 export default verified;
-function VerifiedEmail() {
-  return <div>verified</div>;
-}
-
-function EmailNotVerified() {
-  const emailRef = useRef();
-
-  function onSend() {
-    const email = emailRef.current.value;
-    if (!emailRef.current?.value) return toast.warning("Email is required!!!");
-
-    requestEmailVerification(email)
-      .then((res) => {
-        console.log(res.data);
-        toast.success("Please check your email for instructions");
-      })
-      .catch((err) => {
-        toast.error("Something went wrong");
-      });
-  }
-
-  return (
-    <div className=" p-10 shadow">
-      <div className="h-56 ">
-        <img src="/img/logo.svg" alt="" className="h-full w-full" />
-      </div>
-      <h1 className="font-bold text-2xl">
-        Enter your Email your verify your account
-      </h1>
-      <div>
-        <input
-          type="email"
-          placeholder="Email"
-          className="border p-2 rounded w-full"
-          ref={emailRef}
-        />
-      </div>
-      <button className="w-full bg-green-700 p-2 mt-2 rounded" onClick={onSend}>
-        Send
-      </button>
-    </div>
-  );
-}

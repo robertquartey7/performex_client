@@ -5,6 +5,7 @@ import { signIn, useSession } from "next-auth/react";
 import { toast } from "react-toastify";
 import { getUser } from "@/api/user";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 function Signin() {
   const router = useRouter();
@@ -35,14 +36,13 @@ function Signin() {
   if (data) {
     getUser(data.user.id)
       .then(({ data }) => {
-        if (!data.is_verified)
-          return router.push(`/verified?status=${data.is_verified}`);
+        // if (!data.is_verified)
+        //   return router.push(`/verify?status=${data.is_verified}`);
         if (!data.is_profile_completed) {
           return router.push(`/profile?_id=${data._id}`);
         } else {
           return router.push("/");
         }
-        // console.log(data);
       })
       .catch((err) => {
         console.log("err", err);
@@ -130,4 +130,3 @@ function Signin() {
 }
 
 export default Signin;
-

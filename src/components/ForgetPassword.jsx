@@ -28,7 +28,7 @@ function ForgetPassword() {
   return (
     <div className="flex justify-center items-center flex-col">
       <div className="h-56 ">
-        <Image src="/img/logo.svg" alt="" className="h-full w-full" />
+        <img src="/img/logo.svg" alt="" className="h-full w-full" />
       </div>
       <div className="shadow border p-10 rounded mb-2 md:w-[60%]">
         <h1 className="font-bold text-2xl text-center mb-2">Forgot Password</h1>

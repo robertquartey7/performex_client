@@ -1,14 +1,7 @@
-import React from 'react'
-import Header from '@/components/header/Header'
+import React from "react";
 
-const Ourstory = () => {
-  return (
-    <div>
-      <Header/>
-      hello
-      
-    </div>
-  )
-}
+const ourstory = () => {
+  return <div></div>;
+};
 
-export default Ourstory
+export default ourstory;

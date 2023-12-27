@@ -32,12 +32,15 @@ function Athlete({ userId }) {
       userId,
     })
       .then((res) => {
+        if (res.response?.status === 409)
+          return toast.error(res.response.data.message);
+        if (res.response?.status === 404)
+          return toast.error("profile not found");
         toast.success("profile completed");
-        router.push("/");
+        return router.push("/");
       })
       .catch((err) => {
         toast.error("Something went wrong");
-        console.log(err.message);
       });
   }
 

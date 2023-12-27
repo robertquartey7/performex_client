@@ -21,7 +21,7 @@ export async function requestEmailVerification(email) {
 export async function verifyEmail(token) {
   try {
     const verifiedEmail = await axios.get(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/request_email_verification/${token}`
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/verify_email/${token}`
     );
 
     return verifiedEmail;

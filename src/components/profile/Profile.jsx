@@ -36,7 +36,7 @@ function Profile() {
         {profileState === "athlete" && <Athlete userId={id} />}
         {profileState === "recruiter" && <Recruiter userId={id} />}
       </div>{" "}
-      <div className="text-gray-500 m-5 px-10 flex flex-col  items-center">
+      <div className="text-gray-500 m-5 px-10 flex flex-col items-center">
         <p>Contact Us:</p>
         <a href="mailto:contact@performexoffical.com">
           contact@performexoffical.com
