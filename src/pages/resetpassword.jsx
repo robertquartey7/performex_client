@@ -22,9 +22,11 @@ function resetpssword() {
         password: confirmPasswordRef.current.value,
       })
         .then((res) => {
+          toast.success("Password Reset Successful");
           console.log(res);
         })
         .catch((err) => {
+          toast.error('something went wrong')
           console.log(err);
         });
     }
@@ -50,7 +52,12 @@ function resetpssword() {
             ref={confirmPasswordRef}
           />
         </div>
-        <button className="w-full p-2 rounded bg-green-700" onClick={handlePasswordReset}>Submit</button>
+        <button
+          className="w-full p-2 rounded bg-green-700"
+          onClick={handlePasswordReset}
+        >
+          Submit
+        </button>
       </div>
     </div>
   );

@@ -18,12 +18,12 @@ export async function requestReset(email) {
 export async function resetPassword({ token, password }) {
   try {
     const resetPassword = await axios.post(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/reset-password/:${token}`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/reset-password/${token}`,
       {
         password,
       }
     );
-
+      
     return resetPassword;
   } catch (error) {
     return error;
